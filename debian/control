@@ -1,0 +1,12 @@
+Source: ros-galactic-gazebo-ros2-control-demos
+Section: misc
+Priority: optional
+Maintainer: Alejandro Hernandez <alejandro@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-galactic-ament-cmake, ros-galactic-ament-cmake-gtest, ros-galactic-ament-lint-auto, ros-galactic-ament-lint-common, ros-galactic-control-msgs, ros-galactic-rclcpp, ros-galactic-rclcpp-action, ros-galactic-std-msgs, ros-galactic-ros-workspace
+Homepage: http://ros.org/wiki/gazebo_ros_control
+Standards-Version: 3.9.2
+
+Package: ros-galactic-gazebo-ros2-control-demos
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-galactic-ament-index-python, ros-galactic-control-msgs, ros-galactic-effort-controllers, ros-galactic-gazebo-ros, ros-galactic-gazebo-ros2-control, ros-galactic-hardware-interface, ros-galactic-joint-state-broadcaster, ros-galactic-joint-trajectory-controller, ros-galactic-launch, ros-galactic-launch-ros, ros-galactic-rclcpp, ros-galactic-robot-state-publisher, ros-galactic-ros2-control, ros-galactic-ros2-controllers, ros-galactic-std-msgs, ros-galactic-velocity-controllers, ros-galactic-xacro, ros-galactic-ros-workspace
+Description: gazebo_ros2_control_demos
