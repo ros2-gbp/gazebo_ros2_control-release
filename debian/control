@@ -1,0 +1,12 @@
+Source: ros-galactic-gazebo-ros2-control
+Section: misc
+Priority: optional
+Maintainer: Alejandro Hernandez <alejandro@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-galactic-ament-cmake, ros-galactic-ament-cmake-gtest, ros-galactic-ament-lint-auto, ros-galactic-ament-lint-common, ros-galactic-angles, ros-galactic-controller-manager, ros-galactic-gazebo-dev, ros-galactic-gazebo-ros, ros-galactic-hardware-interface, ros-galactic-pluginlib, ros-galactic-rclcpp, ros-galactic-std-msgs, ros-galactic-urdf, ros-galactic-yaml-cpp-vendor, ros-galactic-ros-workspace
+Homepage: http://ros.org/wiki/gazebo_ros_control
+Standards-Version: 3.9.2
+
+Package: ros-galactic-gazebo-ros2-control
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-galactic-angles, ros-galactic-controller-manager, ros-galactic-gazebo-dev, ros-galactic-gazebo-ros, ros-galactic-hardware-interface, ros-galactic-pluginlib, ros-galactic-rclcpp, ros-galactic-std-msgs, ros-galactic-urdf, ros-galactic-yaml-cpp-vendor, ros-galactic-ros-workspace
+Description: gazebo_ros2_control
