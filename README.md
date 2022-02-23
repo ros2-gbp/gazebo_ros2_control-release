@@ -1,3 +1,28 @@
+## gazebo_ros2_control (rolling) - 0.0.8-2
+
+The packages in the `gazebo_ros2_control` repository were released into the `rolling` distro by running `/home/steven/osrf/bloom/.direnv/python-3.10.2/bin/bloom-release -r rolling gazebo_ros2_control -e` on `Wed, 23 Feb 2022 21:20:05 -0000`
+
+These packages were released:
+- `gazebo_ros2_control`
+- `gazebo_ros2_control_demos`
+
+Version of package(s) in repository `gazebo_ros2_control`:
+
+- upstream repository: https://github.com/ros-simulation/gazebo_ros2_control.git
+- release repository: https://github.com/ros2-gbp/gazebo_ros2_control-release.git
+- rosdistro version: `null`
+- old version: `0.0.8-1`
+- new version: `0.0.8-2`
+
+Versions of tools used:
+
+- bloom version: `0.10.7`
+- catkin_pkg version: `0.4.24`
+- rosdep version: `0.21.0`
+- rosdistro version: `0.8.3`
+- vcstools version: `0.1.42`
+
+
 ## gazebo_ros2_control (rolling) - 0.0.8-1
 
 The packages in the `gazebo_ros2_control` repository were released into the `rolling` distro by running `/usr/bin/bloom-release --rosdistro rolling --track rolling gazebo_ros2_control --edit` on `Fri, 28 Jan 2022 09:43:38 -0000`
