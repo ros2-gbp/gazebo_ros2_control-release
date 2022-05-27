@@ -14,6 +14,8 @@ It is running Gazebo and some other ROS 2 nodes.
 
 ![](img/gazebo_ros2_control_position.gif)
 
+![](img/gazebo_ros2_control_diff_drive.gif)
+
 ## Running
 
 ### Modifying or building your own
@@ -87,6 +89,37 @@ include
   </joint>
 </ros2_control>
 ```
+
+### Using mimic joints in simulation
+
+To use `mimic` joints in `gazebo_ros2_control` you should define its parameters to your URDF.
+We should include:
+
+- `<mimic>` tag to the mimicked joint ([detailed manual(https://wiki.ros.org/urdf/XML/joint))
+- `mimic` and `multiplier` parameters to joint definition in `<ros2_control>` tag
+
+```xml
+<joint name="left_finger_joint" type="prismatic">
+  <mimic joint="right_finger_joint"/>
+  <axis xyz="0 1 0"/>
+  <origin xyz="0.0 0.48 1" rpy="0.0 0.0 3.1415926535"/>
+  <parent link="base"/>
+  <child link="finger_left"/>
+  <limit effort="1000.0" lower="0" upper="0.38" velocity="10"/>
+</joint>
+```
+
+```xml
+<joint name="left_finger_joint">
+  <param name="mimic">right_finger_joint</param>
+  <param name="multiplier">1</param>
+  <command_interface name="position"/>
+  <state_interface name="position"/>
+  <state_interface name="velocity"/>
+  <state_interface name="effort"/>
+</joint>
+```
+
 
 ## Add the gazebo_ros2_control plugin
 
@@ -190,6 +223,7 @@ You can run some of the configuration running the following commands:
 ros2 launch gazebo_ros2_control_demos cart_example_position.launch.py
 ros2 launch gazebo_ros2_control_demos cart_example_velocity.launch.py
 ros2 launch gazebo_ros2_control_demos cart_example_effort.launch.py
+ros2 launch gazebo_ros2_control_demos diff_drive_example.launch.py
 ```
 
 Send example commands:
@@ -200,6 +234,22 @@ When the Gazebo world is launched you can run some of the following commads to m
 ros2 run gazebo_ros2_control_demos example_position
 ros2 run gazebo_ros2_control_demos example_velocity
 ros2 run gazebo_ros2_control_demos example_effort
+ros2 run ign_ros2_control_demos example_diff_drive
+```
+
+The following example shows parallel gripper with mimic joint:
+
+![](img/gripper.gif)
+
+
+```bash
+ros2 launch gazebo_ros2_control_demos gripper_mimic_joint_example.launch.py
+```
+
+Send example commands:
+
+```bash
+ros2 run gazebo_ros2_control_demos example_gripper
 ```
 
 #### Gazebo + Moveit2 + ROS 2
