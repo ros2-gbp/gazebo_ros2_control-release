@@ -1,5 +1,5 @@
 #!/bin/sh
 
-. /opt/ros/galactic/setup.sh
+. /opt/ros/rolling/setup.sh
 . /home/ros2_ws/install/setup.sh
 exec "$@"

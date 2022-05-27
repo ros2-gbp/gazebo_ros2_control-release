@@ -47,6 +47,12 @@ ament_target_dependencies(example_effort
   std_msgs
 )
 
+add_executable(example_gripper examples/example_gripper)
+ament_target_dependencies(example_gripper
+  rclcpp
+  std_msgs
+)
+
 add_executable(example_diff_drive examples/example_diff_drive.cpp)
 ament_target_dependencies(example_diff_drive
   rclcpp
@@ -67,6 +73,7 @@ install(
     example_velocity
     example_effort
     example_diff_drive
+    example_gripper
   DESTINATION
     lib/${PROJECT_NAME}
 )
