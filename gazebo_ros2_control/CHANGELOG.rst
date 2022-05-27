@@ -2,19 +2,32 @@
 Changelog for package gazebo_ros2_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.1.0 (2022-05-27)
+0.2.0 (2022-05-27)
 ------------------
-* Declare dependency of gazebo_hardware_plugins to urdf in CMakeLists.txt (`#117 <https://github.com/ros-simulation/gazebo_ros2_control/issues/117>`_) (`#119 <https://github.com/ros-simulation/gazebo_ros2_control/issues/119>`_)
-  Co-authored-by: Martin Wudenka <Martin.Wudenka@gmx.de>
+* Declare dependency of gazebo_hardware_plugins to urdf in CMakeLists.txt (`#117 <https://github.com/ros-simulation/gazebo_ros2_control/issues/117>`_)
+* Contributors: Martin Wudenka
+
+0.0.7 (2021-12-03)
+------------------
+* Pass ROS time instead of SYSTEM time to update function (`#97 <https://github.com/ros-simulation/gazebo_ros2_control//issues/97>`_)
+* Contributors: Błażej Sowa
+
+0.0.6 (2021-11-18)
+------------------
+* Fix ros2_control resource manager in galatic (`#96 <https://github.com/ros-simulation/gazebo_ros2_control//issues/96>`_)
 * Contributors: Alejandro Hernández Cordero
 
 0.0.4 (2021-10-26)
 ------------------
+* Added testing CI (`#93 <https://github.com/ros-simulation/gazebo_ros2_control//issues/93>`_)
+  Co-authored-by: Bence Magyar <bence.magyar.robotics@gmail.com>
+  Co-authored-by: Bence Magyar <bence.magyar.robotics@gmail.com>
 * fix maintainer email (`#92 <https://github.com/ros-simulation/gazebo_ros2_control//issues/92>`_)
+* Galactic: Pass time and period to update function (`#88 <https://github.com/ros-simulation/gazebo_ros2_control//issues/88>`_)
 * Export interfaces created in init (`#83 <https://github.com/ros-simulation/gazebo_ros2_control//issues/83>`_)
 * Add Imu and FT state interfaces (`#65 <https://github.com/ros-simulation/gazebo_ros2_control//issues/65>`_)
   Co-authored-by: Jordan Palacios <jordan.palacios@pal-robotics.com>
-* Contributors: Alejandro Hernández Cordero, Błażej Sowa, Victor Lopez
+* Contributors: Alejandro Hernández Cordero, Bence Magyar, Błażej Sowa, Victor Lopez
 
 0.0.3 (2021-06-16)
 ------------------
