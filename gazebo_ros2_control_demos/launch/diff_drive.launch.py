@@ -38,7 +38,8 @@ def generate_launch_description():
 
     xacro_file = os.path.join(gazebo_ros2_control_demos_path,
                               'urdf',
-                              'test_cart_velocity.xacro.urdf')
+                              'test_diff_drive.xacro.urdf')
+
     doc = xacro.parse(open(xacro_file))
     xacro.process_doc(doc)
     params = {'robot_description': doc.toxml()}
@@ -62,12 +63,8 @@ def generate_launch_description():
     )
 
     load_joint_trajectory_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start', 'velocity_controller'],
-        output='screen'
-    )
-
-    load_imu_sensor_broadcaster = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_start_controller', 'imu_sensor_broadcaster'],
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
+             'diff_drive_base_controller'],
         output='screen'
     )
 
@@ -82,12 +79,6 @@ def generate_launch_description():
             event_handler=OnProcessExit(
                 target_action=load_joint_state_controller,
                 on_exit=[load_joint_trajectory_controller],
-            )
-        ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_trajectory_controller,
-                on_exit=[load_imu_sensor_broadcaster],
             )
         ),
         gazebo,

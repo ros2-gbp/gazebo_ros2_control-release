@@ -14,6 +14,8 @@ It is running Gazebo and some other ROS 2 nodes.
 
 ![](img/gazebo_ros2_control_position.gif)
 
+![](img/gazebo_ros2_control_diff_drive.gif)
+
 ## Running
 
 ### Modifying or building your own
@@ -79,9 +81,7 @@ include
       <param name="min">-1000</param>
       <param name="max">1000</param>
     </command_interface>
-    <state_interface name="position">
-      <param name="initial_value">1.0</param>
-    </state_interface>
+    <state_interface name="position"/>
     <state_interface name="velocity"/>
     <state_interface name="effort"/>
   </joint>
@@ -190,6 +190,7 @@ You can run some of the configuration running the following commands:
 ros2 launch gazebo_ros2_control_demos cart_example_position.launch.py
 ros2 launch gazebo_ros2_control_demos cart_example_velocity.launch.py
 ros2 launch gazebo_ros2_control_demos cart_example_effort.launch.py
+ros2 launch gazebo_ros2_control_demos diff_drive_example.launch.py
 ```
 
 Send example commands:
@@ -200,6 +201,7 @@ When the Gazebo world is launched you can run some of the following commads to m
 ros2 run gazebo_ros2_control_demos example_position
 ros2 run gazebo_ros2_control_demos example_velocity
 ros2 run gazebo_ros2_control_demos example_effort
+ros2 run ign_ros2_control_demos example_diff_drive
 ```
 
 #### Gazebo + Moveit2 + ROS 2

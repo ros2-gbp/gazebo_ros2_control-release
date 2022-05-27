@@ -2,27 +2,17 @@
 Changelog for package gazebo_ros2_control_demos
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.0.8 (2022-01-28)
+0.1.0 (2022-05-27)
 ------------------
-* Enable setting default position of the simulated robot using ros2_control URDF tag. (`#100 <https://github.com/ros-simulation/gazebo_ros2_control//issues/100>`_)
-* Contributors: Denis Štogl
-
-0.0.7 (2021-12-03)
-------------------
-
-0.0.6 (2021-11-18)
-------------------
-* Fix ros2_control resource manager in galatic (`#96 <https://github.com/ros-simulation/gazebo_ros2_control//issues/96>`_)
+* Added diff drive example (`#113 <https://github.com/ros-simulation/gazebo_ros2_control/issues/113>`_)
 * Contributors: Alejandro Hernández Cordero
 
 0.0.4 (2021-10-26)
 ------------------
 * fix maintainer email (`#92 <https://github.com/ros-simulation/gazebo_ros2_control//issues/92>`_)
-* Galactic: Pass time and period to update function (`#88 <https://github.com/ros-simulation/gazebo_ros2_control//issues/88>`_)
-* Update severity of msgs to proper level (`#91 <https://github.com/ros-simulation/gazebo_ros2_control//issues/91>`_)
 * Add Imu and FT state interfaces (`#65 <https://github.com/ros-simulation/gazebo_ros2_control//issues/65>`_)
   Co-authored-by: Jordan Palacios <jordan.palacios@pal-robotics.com>
-* Contributors: Alejandro Hernández Cordero, Andy McEvoy, Bence Magyar, Victor Lopez
+* Contributors: Alejandro Hernández Cordero, Victor Lopez
 
 0.0.3 (2021-06-16)
 ------------------

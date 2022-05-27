@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <limits>
 #include <map>
 #include <memory>
 #include <string>
@@ -23,10 +22,6 @@
 #include "gazebo/sensors/ImuSensor.hh"
 #include "gazebo/sensors/ForceTorqueSensor.hh"
 #include "gazebo/sensors/SensorManager.hh"
-
-#include "hardware_interface/hardware_info.hpp"
-#include "hardware_interface/types/hardware_interface_type_values.hpp"
-
 class gazebo_ros2_control::GazeboSystemPrivate
 {
 public:
@@ -156,53 +151,6 @@ void GazeboSystem::registerJoints(
     // Accept this joint and continue configuration
     RCLCPP_INFO_STREAM(this->nh_->get_logger(), "Loading joint: " << joint_name);
 
-    RCLCPP_INFO_STREAM(this->nh_->get_logger(), "\tState:");
-
-    auto get_initial_value = [this](const hardware_interface::InterfaceInfo & interface_info) {
-        if (!interface_info.initial_value.empty()) {
-          double value = std::stod(interface_info.initial_value);
-          RCLCPP_INFO(this->nh_->get_logger(), "\t\t\t found initial value: %f", value);
-          return value;
-        } else {
-          return 0.0;
-        }
-      };
-
-    double initial_position = std::numeric_limits<double>::quiet_NaN();
-    double initial_velocity = std::numeric_limits<double>::quiet_NaN();
-    double initial_effort = std::numeric_limits<double>::quiet_NaN();
-
-    // register the state handles
-    for (unsigned int i = 0; i < hardware_info.joints[j].state_interfaces.size(); i++) {
-      if (hardware_info.joints[j].state_interfaces[i].name == "position") {
-        RCLCPP_INFO_STREAM(this->nh_->get_logger(), "\t\t position");
-        this->dataPtr->state_interfaces_.emplace_back(
-          joint_name,
-          hardware_interface::HW_IF_POSITION,
-          &this->dataPtr->joint_position_[j]);
-        initial_position = get_initial_value(hardware_info.joints[j].state_interfaces[i]);
-        this->dataPtr->joint_position_[j] = initial_position;
-      }
-      if (hardware_info.joints[j].state_interfaces[i].name == "velocity") {
-        RCLCPP_INFO_STREAM(this->nh_->get_logger(), "\t\t velocity");
-        this->dataPtr->state_interfaces_.emplace_back(
-          joint_name,
-          hardware_interface::HW_IF_VELOCITY,
-          &this->dataPtr->joint_velocity_[j]);
-        initial_velocity = get_initial_value(hardware_info.joints[j].state_interfaces[i]);
-        this->dataPtr->joint_velocity_[j] = initial_velocity;
-      }
-      if (hardware_info.joints[j].state_interfaces[i].name == "effort") {
-        RCLCPP_INFO_STREAM(this->nh_->get_logger(), "\t\t effort");
-        this->dataPtr->state_interfaces_.emplace_back(
-          joint_name,
-          hardware_interface::HW_IF_EFFORT,
-          &this->dataPtr->joint_effort_[j]);
-        initial_effort = get_initial_value(hardware_info.joints[j].state_interfaces[i]);
-        this->dataPtr->joint_effort_[j] = initial_effort;
-      }
-    }
-
     RCLCPP_INFO_STREAM(this->nh_->get_logger(), "\tCommand:");
 
     // register the command handles
@@ -214,9 +162,6 @@ void GazeboSystem::registerJoints(
           joint_name,
           hardware_interface::HW_IF_POSITION,
           &this->dataPtr->joint_position_cmd_[j]);
-        if (!std::isnan(initial_position)) {
-          this->dataPtr->joint_position_cmd_[j] = initial_position;
-        }
       }
       if (hardware_info.joints[j].command_interfaces[i].name == "velocity") {
         RCLCPP_INFO_STREAM(this->nh_->get_logger(), "\t\t velocity");
@@ -225,9 +170,6 @@ void GazeboSystem::registerJoints(
           joint_name,
           hardware_interface::HW_IF_VELOCITY,
           &this->dataPtr->joint_velocity_cmd_[j]);
-        if (!std::isnan(initial_velocity)) {
-          this->dataPtr->joint_velocity_cmd_[j] = initial_velocity;
-        }
       }
       if (hardware_info.joints[j].command_interfaces[i].name == "effort") {
         this->dataPtr->joint_control_methods_[j] |= EFFORT;
@@ -236,9 +178,33 @@ void GazeboSystem::registerJoints(
           joint_name,
           hardware_interface::HW_IF_EFFORT,
           &this->dataPtr->joint_effort_cmd_[j]);
-        if (!std::isnan(initial_effort)) {
-          this->dataPtr->joint_effort_cmd_[j] = initial_effort;
-        }
+      }
+    }
+
+    RCLCPP_INFO_STREAM(this->nh_->get_logger(), "\tState:");
+
+    // register the state handles
+    for (unsigned int i = 0; i < hardware_info.joints[j].state_interfaces.size(); i++) {
+      if (hardware_info.joints[j].state_interfaces[i].name == "position") {
+        RCLCPP_INFO_STREAM(this->nh_->get_logger(), "\t\t position");
+        this->dataPtr->state_interfaces_.emplace_back(
+          joint_name,
+          hardware_interface::HW_IF_POSITION,
+          &this->dataPtr->joint_position_[j]);
+      }
+      if (hardware_info.joints[j].state_interfaces[i].name == "velocity") {
+        RCLCPP_INFO_STREAM(this->nh_->get_logger(), "\t\t velocity");
+        this->dataPtr->state_interfaces_.emplace_back(
+          joint_name,
+          hardware_interface::HW_IF_VELOCITY,
+          &this->dataPtr->joint_velocity_[j]);
+      }
+      if (hardware_info.joints[j].state_interfaces[i].name == "effort") {
+        RCLCPP_INFO_STREAM(this->nh_->get_logger(), "\t\t effort");
+        this->dataPtr->state_interfaces_.emplace_back(
+          joint_name,
+          hardware_interface::HW_IF_EFFORT,
+          &this->dataPtr->joint_effort_[j]);
       }
     }
   }
@@ -380,13 +346,13 @@ void GazeboSystem::registerSensors(
   }
 }
 
-CallbackReturn
-GazeboSystem::on_init(const hardware_interface::HardwareInfo & actuator_info)
+hardware_interface::return_type
+GazeboSystem::configure(const hardware_interface::HardwareInfo & actuator_info)
 {
-  if (hardware_interface::SystemInterface::on_init(actuator_info) != CallbackReturn::SUCCESS) {
-    return CallbackReturn::ERROR;
+  if (configure_default(actuator_info) != hardware_interface::return_type::OK) {
+    return hardware_interface::return_type::ERROR;
   }
-  return CallbackReturn::SUCCESS;
+  return hardware_interface::return_type::OK;
 }
 
 std::vector<hardware_interface::StateInterface>
@@ -401,14 +367,16 @@ GazeboSystem::export_command_interfaces()
   return std::move(this->dataPtr->command_interfaces_);
 }
 
-CallbackReturn GazeboSystem::on_activate(const rclcpp_lifecycle::State & previous_state)
+hardware_interface::return_type GazeboSystem::start()
 {
-  return CallbackReturn::SUCCESS;
+  status_ = hardware_interface::status::STARTED;
+  return hardware_interface::return_type::OK;
 }
 
-CallbackReturn GazeboSystem::on_deactivate(const rclcpp_lifecycle::State & previous_state)
+hardware_interface::return_type GazeboSystem::stop()
 {
-  return CallbackReturn::SUCCESS;
+  status_ = hardware_interface::status::STOPPED;
+  return hardware_interface::return_type::OK;
 }
 
 hardware_interface::return_type GazeboSystem::read()

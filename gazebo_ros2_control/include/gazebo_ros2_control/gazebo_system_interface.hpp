@@ -24,12 +24,12 @@
 #include "gazebo/physics/Model.hh"
 #include "gazebo/physics/physics.hh"
 
+#include "hardware_interface/base_interface.hpp"
 #include "hardware_interface/system_interface.hpp"
+#include "hardware_interface/types/hardware_interface_type_values.hpp"
 
 #include "rclcpp/rclcpp.hpp"
 
-// URDF
-#include "urdf/model.h"
 
 namespace gazebo_ros2_control
 {
@@ -58,7 +58,7 @@ protected:
 
 // SystemInterface provides API-level access to read and command joint properties.
 class GazeboSystemInterface
-  : public hardware_interface::SystemInterface
+  : public hardware_interface::BaseInterface<hardware_interface::SystemInterface>
 {
 public:
   /// \brief Initilize the system interface
