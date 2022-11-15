@@ -47,7 +47,7 @@ ament_target_dependencies(example_effort
   std_msgs
 )
 
-add_executable(example_gripper examples/example_gripper.cpp)
+add_executable(example_gripper examples/example_gripper)
 ament_target_dependencies(example_gripper
   rclcpp
   std_msgs
@@ -66,14 +66,13 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-## Install
 install(
   TARGETS
     example_position
     example_velocity
     example_effort
-    example_diff_drive
     example_gripper
+    example_diff_drive
   DESTINATION
     lib/${PROJECT_NAME}
 )

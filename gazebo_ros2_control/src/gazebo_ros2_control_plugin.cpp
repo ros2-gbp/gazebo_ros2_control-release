@@ -92,9 +92,6 @@ public:
   // String with the name of the node that contains the robot_description
   std::string robot_description_node_;
 
-  // Name of the file with the controllers configuration
-  std::string param_file_;
-
   // Executor to spin the controller
   rclcpp::executors::MultiThreadedExecutor::SharedPtr executor_;
 
@@ -114,7 +111,7 @@ public:
   rclcpp::Duration control_period_ = rclcpp::Duration(1, 0);
 
   // Last time the update method was called
-  rclcpp::Time last_update_sim_time_ros_ = rclcpp::Time((int64_t)0, RCL_ROS_TIME);
+  rclcpp::Time last_update_sim_time_ros_;
 };
 
 GazeboRosControlPlugin::GazeboRosControlPlugin()
@@ -186,19 +183,25 @@ void GazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf::Element
     impl_->robot_description_node_ = "robot_state_publisher";  // default
   }
 
+  // There's currently no direct way to set parameters to the plugin's node
+  // So we have to parse the plugin file manually and set it to the node's context.
+  auto rcl_context = impl_->model_nh_->get_node_base_interface()->get_context()->get_rcl_context();
+  std::vector<std::string> arguments = {"--ros-args"};
+
   if (sdf->HasElement("parameters")) {
-    impl_->param_file_ = sdf->GetElement("parameters")->Get<std::string>();
-    RCLCPP_INFO(
-      impl_->model_nh_->get_logger(), "Loading parameter file %s\n", impl_->param_file_.c_str());
+    sdf::ElementPtr argument_sdf = sdf->GetElement("parameters");
+    while (argument_sdf) {
+      std::string argument = argument_sdf->Get<std::string>();
+      RCLCPP_INFO(impl_->model_nh_->get_logger(), "Loading parameter files %s", argument.c_str());
+      arguments.push_back(RCL_PARAM_FILE_FLAG);
+      arguments.push_back(argument);
+      argument_sdf = argument_sdf->GetNextElement("parameters");
+    }
   } else {
     RCLCPP_ERROR(
       impl_->model_nh_->get_logger(), "No parameter file provided. Configuration might be wrong");
   }
 
-  // There's currently no direct way to set parameters to the plugin's node
-  // So we have to parse the plugin file manually and set it to the node's context.
-  auto rcl_context = impl_->model_nh_->get_node_base_interface()->get_context()->get_rcl_context();
-  std::vector<std::string> arguments = {"--ros-args", "--params-file", impl_->param_file_.c_str()};
   if (sdf->HasElement("ros")) {
     sdf = sdf->GetElement("ros");
 
@@ -244,8 +247,7 @@ void GazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf::Element
   }
   if (rcl_arguments_get_param_files_count(&rcl_args) < 1) {
     RCLCPP_ERROR(
-      impl_->model_nh_->get_logger(), "failed to parse yaml file: '%s'\n",
-      impl_->param_file_.c_str());
+      impl_->model_nh_->get_logger(), "failed to parse input yaml file(s)");
     return;
   }
 
@@ -259,10 +261,10 @@ void GazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf::Element
   // setup actuators and mechanism control node.
   // This call will block if ROS is not properly initialized.
   std::string urdf_string;
-  std::vector<hardware_interface::HardwareInfo> control_hardware_info;
+  std::vector<hardware_interface::HardwareInfo> control_hardware;
   try {
     urdf_string = impl_->getURDF(impl_->robot_description_);
-    control_hardware_info = hardware_interface::parse_control_resources_from_urdf(urdf_string);
+    control_hardware = hardware_interface::parse_control_resources_from_urdf(urdf_string);
   } catch (const std::runtime_error & ex) {
     RCLCPP_ERROR_STREAM(
       impl_->model_nh_->get_logger(),
@@ -284,8 +286,8 @@ void GazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf::Element
       ex.what());
   }
 
-  for (unsigned int i = 0; i < control_hardware_info.size(); i++) {
-    std::string robot_hw_sim_type_str_ = control_hardware_info[i].hardware_class_type;
+  for (unsigned int i = 0; i < control_hardware.size(); i++) {
+    std::string robot_hw_sim_type_str_ = control_hardware[i].hardware_class_type;
     auto gazeboSystem = std::unique_ptr<gazebo_ros2_control::GazeboSystemInterface>(
       impl_->robot_hw_sim_loader_->createUnmanagedInstance(robot_hw_sim_type_str_));
 
@@ -293,7 +295,7 @@ void GazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf::Element
     if (!gazeboSystem->initSim(
         node_ros2,
         impl_->parent_model_,
-        control_hardware_info[i],
+        control_hardware[i],
         sdf))
     {
       RCLCPP_FATAL(
@@ -301,13 +303,7 @@ void GazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf::Element
       return;
     }
 
-    resource_manager_->import_component(std::move(gazeboSystem), control_hardware_info[i]);
-
-    // activate all components
-    rclcpp_lifecycle::State state(
-      lifecycle_msgs::msg::State::PRIMARY_STATE_ACTIVE,
-      hardware_interface::lifecycle_state_names::ACTIVE);
-    resource_manager_->set_component_state(control_hardware_info[i].name, state);
+    resource_manager_->import_component(std::move(gazeboSystem));
   }
 
   impl_->executor_ = std::make_shared<rclcpp::executors::MultiThreadedExecutor>();
@@ -371,26 +367,25 @@ void GazeboRosControlPrivate::Update()
 {
   // Get the simulation time and period
   gazebo::common::Time gz_time_now = parent_model_->GetWorld()->SimTime();
-  rclcpp::Time sim_time_ros(gz_time_now.sec, gz_time_now.nsec, RCL_ROS_TIME);
+  rclcpp::Time sim_time_ros(gz_time_now.sec, gz_time_now.nsec);
   rclcpp::Duration sim_period = sim_time_ros - last_update_sim_time_ros_;
 
   if (sim_period >= control_period_) {
-    controller_manager_->read(sim_time_ros, sim_period);
-    controller_manager_->update(sim_time_ros, sim_period);
     last_update_sim_time_ros_ = sim_time_ros;
+    controller_manager_->read();
+    controller_manager_->update();
   }
 
   // Always set commands on joints, otherwise at low control frequencies the joints tremble
   // as they are updated at a fraction of gazebo sim time
-  // use same time as for read and update call - this is how it is done is ros2_control_node
-  controller_manager_->write(sim_time_ros, sim_period);
+  controller_manager_->write();
 }
 
 // Called on world reset
 void GazeboRosControlPrivate::Reset()
 {
   // Reset timing variables to not pass negative update periods to controllers on world reset
-  last_update_sim_time_ros_ = rclcpp::Time((int64_t)0, RCL_ROS_TIME);
+  last_update_sim_time_ros_ = rclcpp::Time();
 }
 
 // Get the URDF XML from the parameter server

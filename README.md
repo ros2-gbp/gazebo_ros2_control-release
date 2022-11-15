@@ -81,9 +81,7 @@ include
       <param name="min">-1000</param>
       <param name="max">1000</param>
     </command_interface>
-    <state_interface name="position">
-      <param name="initial_value">1.0</param>
-    </state_interface>
+    <state_interface name="position"/>
     <state_interface name="velocity"/>
     <state_interface name="effort"/>
   </joint>
@@ -100,24 +98,47 @@ We should include:
 
 ```xml
 <joint name="left_finger_joint" type="prismatic">
-  <mimic joint="right_finger_joint"/>
-  <axis xyz="0 1 0"/>
-  <origin xyz="0.0 0.48 1" rpy="0.0 0.0 3.1415926535"/>
-  <parent link="base"/>
-  <child link="finger_left"/>
-  <limit effort="1000.0" lower="0" upper="0.38" velocity="10"/>
+	<mimic joint="right_finger_joint"/>
+	<axis xyz="0 1 0"/>
+	<origin xyz="0.0 0.48 1" rpy="0.0 0.0 3.1415926535"/>
+	<parent link="base"/>
+	<child link="finger_left"/>
+	<limit effort="1000.0" lower="0" upper="0.38" velocity="10"/>
+</joint>
+
+<joint name="right_finger_joint" type="prismatic">
+	<axis xyz="0 1 0"/>
+	<origin xyz="0.0 -0.48 1" rpy="0.0 0.0 0.0"/>
+	<parent link="base"/>
+	<child link="finger_right"/>
+	<limit effort="1000.0" lower="0" upper="0.38" velocity="10"/>
 </joint>
 ```
 
 ```xml
-<joint name="left_finger_joint">
-  <param name="mimic">right_finger_joint</param>
-  <param name="multiplier">1</param>
-  <command_interface name="position"/>
-  <state_interface name="position"/>
-  <state_interface name="velocity"/>
-  <state_interface name="effort"/>
-</joint>
+<ros2_control name="GazeboSystem" type="system">
+
+	<hardware>
+		<plugin>gazebo_ros2_control/GazeboSystem</plugin>
+	</hardware>
+
+	<joint name="right_finger_joint">
+		<command_interface name="position"/>
+		<state_interface name="position"/>
+		<state_interface name="velocity"/>
+		<state_interface name="effort"/>
+	</joint>
+
+	<joint name="left_finger_joint">
+		<param name="mimic">right_finger_joint</param>
+		<param name="multiplier">1</param>
+		<command_interface name="position"/>
+		<state_interface name="position"/>
+		<state_interface name="velocity"/>
+		<state_interface name="effort"/>
+	</joint>
+
+</ros2_control>
 ```
 
 
@@ -228,7 +249,7 @@ ros2 launch gazebo_ros2_control_demos diff_drive_example.launch.py
 
 Send example commands:
 
-When the Gazebo world is launched you can run some of the following commads to move the cart.
+When the Gazebo world is launched you can run some of the following commands to move the cart.
 
 ```bash
 ros2 run gazebo_ros2_control_demos example_position
@@ -236,7 +257,6 @@ ros2 run gazebo_ros2_control_demos example_velocity
 ros2 run gazebo_ros2_control_demos example_effort
 ros2 run ign_ros2_control_demos example_diff_drive
 ```
-
 The following example shows parallel gripper with mimic joint:
 
 ![](img/gripper.gif)

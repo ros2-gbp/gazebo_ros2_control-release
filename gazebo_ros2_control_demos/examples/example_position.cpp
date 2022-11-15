@@ -27,12 +27,13 @@ rclcpp_action::ResultCode common_resultcode = rclcpp_action::ResultCode::UNKNOWN
 int common_action_result_code = control_msgs::action::FollowJointTrajectory_Result::SUCCESSFUL;
 
 void common_goal_response(
-  rclcpp_action::ClientGoalHandle
-  <control_msgs::action::FollowJointTrajectory>::SharedPtr goal_handle)
+  std::shared_future<rclcpp_action::ClientGoalHandle
+  <control_msgs::action::FollowJointTrajectory>::SharedPtr> future)
 {
   RCLCPP_DEBUG(
     node->get_logger(), "common_goal_response time: %f",
     rclcpp::Clock().now().seconds());
+  auto goal_handle = future.get();
   if (!goal_handle) {
     common_goal_accepted = false;
     printf("Goal rejected\n");
@@ -151,7 +152,7 @@ int main(int argc, char * argv[])
     RCLCPP_ERROR(node->get_logger(), "send goal call failed :(");
     return 1;
   }
-  RCLCPP_INFO(node->get_logger(), "send goal call ok :)");
+  RCLCPP_ERROR(node->get_logger(), "send goal call ok :)");
 
   rclcpp_action::ClientGoalHandle<control_msgs::action::FollowJointTrajectory>::SharedPtr
     goal_handle = goal_handle_future.get();
@@ -159,7 +160,7 @@ int main(int argc, char * argv[])
     RCLCPP_ERROR(node->get_logger(), "Goal was rejected by server");
     return 1;
   }
-  RCLCPP_INFO(node->get_logger(), "Goal was accepted by server");
+  RCLCPP_ERROR(node->get_logger(), "Goal was accepted by server");
 
   // Wait for the server to be done with the goal
   auto result_future = action_client->async_get_result(goal_handle);
