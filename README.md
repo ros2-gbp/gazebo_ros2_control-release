@@ -1,3 +1,28 @@
+## gazebo_ros2_control (foxy) - 0.1.1-2
+
+The packages in the `gazebo_ros2_control` repository were released into the `foxy` distro by running `/usr/bin/bloom-release --rosdistro foxy --track foxy gazebo_ros2_control -e` on `Tue, 15 Nov 2022 09:31:11 -0000`
+
+These packages were released:
+- `gazebo_ros2_control`
+- `gazebo_ros2_control_demos`
+
+Version of package(s) in repository `gazebo_ros2_control`:
+
+- upstream repository: https://github.com/ros-simulation/gazebo_ros2_control/
+- release repository: https://github.com/ros2-gbp/gazebo_ros2_control-release.git
+- rosdistro version: `0.1.0-1`
+- old version: `0.1.1-1`
+- new version: `0.1.1-2`
+
+Versions of tools used:
+
+- bloom version: `0.11.2`
+- catkin_pkg version: `0.5.2`
+- rosdep version: `0.22.1`
+- rosdistro version: `0.9.0`
+- vcstools version: `0.1.42`
+
+
 ## gazebo_ros2_control (foxy) - 0.1.1-1
 
 The packages in the `gazebo_ros2_control` repository were released into the `foxy` distro by running `/usr/bin/bloom-release --rosdistro foxy --track foxy gazebo_ros2_control -e` on `Tue, 15 Nov 2022 09:28:21 -0000`
