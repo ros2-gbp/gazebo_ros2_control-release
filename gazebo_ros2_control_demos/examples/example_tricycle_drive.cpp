@@ -25,10 +25,10 @@ int main(int argc, char * argv[])
   rclcpp::init(argc, argv);
 
   std::shared_ptr<rclcpp::Node> node =
-    std::make_shared<rclcpp::Node>("diff_drive_test_node");
+    std::make_shared<rclcpp::Node>("tricycle_drive_test_node");
 
   auto publisher = node->create_publisher<geometry_msgs::msg::Twist>(
-    "/diff_drive_base_controller/cmd_vel_unstamped", 10);
+    "/tricycle_controller/cmd_vel", 10);
 
   RCLCPP_INFO(node->get_logger(), "node created");
 

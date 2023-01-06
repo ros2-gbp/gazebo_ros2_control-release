@@ -28,6 +28,8 @@
 
 namespace gazebo_ros2_control
 {
+using CallbackReturn = rclcpp_lifecycle::node_interfaces::LifecycleNodeInterface::CallbackReturn;
+
 // Forward declaration
 class GazeboSystemPrivate;
 
@@ -38,7 +40,7 @@ class GazeboSystem : public GazeboSystemInterface
 {
 public:
   // Documentation Inherited
-  hardware_interface::return_type configure(const hardware_interface::HardwareInfo & system_info)
+  CallbackReturn on_init(const hardware_interface::HardwareInfo & system_info)
   override;
 
   // Documentation Inherited
@@ -48,13 +50,10 @@ public:
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
   // Documentation Inherited
-  hardware_interface::return_type start() override;
+  CallbackReturn on_activate(const rclcpp_lifecycle::State & previous_state) override;
 
   // Documentation Inherited
-  hardware_interface::return_type stop() override;
-
-  // Documentation Inherited
-  hardware_interface::return_type read() override;
+  CallbackReturn on_deactivate(const rclcpp_lifecycle::State & previous_state) override;
 
   // Documentation Inherited
   hardware_interface::return_type perform_command_mode_switch(
@@ -62,7 +61,14 @@ public:
     const std::vector<std::string> & stop_interfaces) override;
 
   // Documentation Inherited
-  hardware_interface::return_type write() override;
+  hardware_interface::return_type read(
+    const rclcpp::Time & time,
+    const rclcpp::Duration & period) override;
+
+  // Documentation Inherited
+  hardware_interface::return_type write(
+    const rclcpp::Time & time,
+    const rclcpp::Duration & period) override;
 
   // Documentation Inherited
   bool initSim(

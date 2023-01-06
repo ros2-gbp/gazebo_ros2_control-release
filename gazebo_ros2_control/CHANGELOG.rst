@@ -2,30 +2,72 @@
 Changelog for package gazebo_ros2_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.1.1 (2022-11-15)
+0.5.0 (2023-01-06)
 ------------------
-* Enable loading params from multiple yaml files (`#149 <https://github.com/ros-controls/gazebo_ros2_control/issues/149>`_) (`#151 <https://github.com/ros-controls/gazebo_ros2_control/issues/151>`_)
-  Co-authored-by: Tony Najjar <tony.najjar@logivations.com>
-* [Backport Foxy] Support for mimic joints and example with gripper. (`#121 <https://github.com/ros-controls/gazebo_ros2_control/issues/121>`_)
-* [backport Foxy] `#136 <https://github.com/ros-controls/gazebo_ros2_control/issues/136>`_ `#147 <https://github.com/ros-controls/gazebo_ros2_control/issues/147>`_ `#139 <https://github.com/ros-controls/gazebo_ros2_control/issues/139>`_ `#134 <https://github.com/ros-controls/gazebo_ros2_control/issues/134>`_ (`#150 <https://github.com/ros-controls/gazebo_ros2_control/issues/150>`_)
-  Co-authored-by: Keegan Sotebeer <ksotebeer95@gmail.com>
-  Co-authored-by: Maciej Bednarczyk <83034299+mcbed@users.noreply.github.com>
-  Co-authored-by: Bence Magyar <bence.magyar.robotics@gmail.com>
-* Contributors: Alejandro Hernández Cordero, Leander Stephen D'Souza
+* Force setting use_sim_time parameter when using plugin. (`#171 <https://github.com/ros-controls/gazebo_ros2_control/issues/171>`_)
+* Improve error message if robot_description\_ param is wrong (`#168 <https://github.com/ros-controls/gazebo_ros2_control/issues/168>`_)
+* Rename hw info class type to plugin name (`#169 <https://github.com/ros-controls/gazebo_ros2_control/issues/169>`_)
+* Removed warning (`#162 <https://github.com/ros-controls/gazebo_ros2_control/issues/162>`_)
+* Mimic joint should have the same control mode as mimicked joint. (`#154 <https://github.com/ros-controls/gazebo_ros2_control/issues/154>`_)
+* Enable loading params from multiple yaml files (`#149 <https://github.com/ros-controls/gazebo_ros2_control/issues/149>`_)
+* Contributors: Alejandro Hernández Cordero, Christoph Fröhlich, Denis Štogl, Tony Najjar
 
-0.1.0 (2022-05-27)
+0.4.0 (2022-08-09)
 ------------------
-* Declare dependency of gazebo_hardware_plugins to urdf in CMakeLists.txt (`#117 <https://github.com/ros-simulation/gazebo_ros2_control/issues/117>`_) (`#119 <https://github.com/ros-simulation/gazebo_ros2_control/issues/119>`_)
-  Co-authored-by: Martin Wudenka <Martin.Wudenka@gmx.de>
+* Implemented perform_command_mode_switch override in GazeboSystem (`#136 <https://github.com/ros-simulation/gazebo_ros2_control/issues/136>`_)
+* added namespace to controller manager (`#147 <https://github.com/ros-simulation/gazebo_ros2_control/issues/147>`_)
+* Activate all hardware in URDF (`#144 <https://github.com/ros-simulation/gazebo_ros2_control/issues/144>`_)
+* activated all hardware by default (`#143 <https://github.com/ros-simulation/gazebo_ros2_control/issues/143>`_)
+* Fix setting initial values if command interfaces are not defined. (`#110 <https://github.com/ros-simulation/gazebo_ros2_control/issues/110>`_)
+* changed name to GazeboSystem (`#142 <https://github.com/ros-simulation/gazebo_ros2_control/issues/142>`_)
+* Contributors: Denis Štogl, Keegan Sotebeer, Maciej Bednarczyk
+
+0.3.1 (2022-07-05)
+------------------
+* Added logic for activating hardware interfaces (`#139 <https://github.com/ros-simulation/gazebo_ros2_control/issues/139>`_)
+* Adjust repo URL (`#134 <https://github.com/ros-simulation/gazebo_ros2_control/issues/134>`_)
+* Contributors: Alejandro Hernández Cordero, Bence Magyar
+
+0.3.0 (2022-05-27)
+------------------
+* Merge pull request `#120 <https://github.com/ros-simulation/gazebo_ros2_control/issues/120>`_ from ros-simulation/ahcorde/main/117
+  Adapted to Humble
+* make linters happy
+* Merge remote-tracking branch 'denis/using-under-namespace' into ahcorde/main/117
+* update read/write interface functions of ros2_control parts
+  This is needed since the ros2_control interfaces have been update
+* Declare dependency of gazebo_hardware_plugins to urdf in CMakeLists.txt (`#117 <https://github.com/ros-simulation/gazebo_ros2_control/issues/117>`_)
+* ros2_control is now having usings under its namespace.
+* Fix mimic joint for effort command (`#109 <https://github.com/ros-simulation/gazebo_ros2_control/issues/109>`_)
+* Support for mimic joints and example with gripper. (`#107 <https://github.com/ros-simulation/gazebo_ros2_control/issues/107>`_)
+* Contributors: Alejandro Hernández Cordero, Christoph Fröhlich, Denis Štogl, Manuel M, Martin Wudenka, ahcorde
+
+0.0.8 (2022-01-28)
+------------------
+* Enable setting default position of the simulated robot using ros2_control URDF tag. (`#100 <https://github.com/ros-simulation/gazebo_ros2_control//issues/100>`_)
+* Contributors: Denis Štogl
+
+0.0.7 (2021-12-03)
+------------------
+* Pass ROS time instead of SYSTEM time to update function (`#97 <https://github.com/ros-simulation/gazebo_ros2_control//issues/97>`_)
+* Contributors: Błażej Sowa
+
+0.0.6 (2021-11-18)
+------------------
+* Fix ros2_control resource manager in galatic (`#96 <https://github.com/ros-simulation/gazebo_ros2_control//issues/96>`_)
 * Contributors: Alejandro Hernández Cordero
 
 0.0.4 (2021-10-26)
 ------------------
+* Added testing CI (`#93 <https://github.com/ros-simulation/gazebo_ros2_control//issues/93>`_)
+  Co-authored-by: Bence Magyar <bence.magyar.robotics@gmail.com>
+  Co-authored-by: Bence Magyar <bence.magyar.robotics@gmail.com>
 * fix maintainer email (`#92 <https://github.com/ros-simulation/gazebo_ros2_control//issues/92>`_)
+* Galactic: Pass time and period to update function (`#88 <https://github.com/ros-simulation/gazebo_ros2_control//issues/88>`_)
 * Export interfaces created in init (`#83 <https://github.com/ros-simulation/gazebo_ros2_control//issues/83>`_)
 * Add Imu and FT state interfaces (`#65 <https://github.com/ros-simulation/gazebo_ros2_control//issues/65>`_)
   Co-authored-by: Jordan Palacios <jordan.palacios@pal-robotics.com>
-* Contributors: Alejandro Hernández Cordero, Błażej Sowa, Victor Lopez
+* Contributors: Alejandro Hernández Cordero, Bence Magyar, Błażej Sowa, Victor Lopez
 
 0.0.3 (2021-06-16)
 ------------------

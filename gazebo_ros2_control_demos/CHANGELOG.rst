@@ -2,27 +2,57 @@
 Changelog for package gazebo_ros2_control_demos
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.1.1 (2022-11-15)
+0.5.0 (2023-01-06)
 ------------------
-* Adding simulation time parameter for the controller manager (`#138 <https://github.com/ros-controls/gazebo_ros2_control/issues/138>`_) (`#158 <https://github.com/ros-controls/gazebo_ros2_control/issues/158>`_)
-  Co-authored-by: Eslam Salah <eslamsalahelsheikh@gmail.com>
-* [backport Foxy] `#136 <https://github.com/ros-controls/gazebo_ros2_control/issues/136>`_ `#147 <https://github.com/ros-controls/gazebo_ros2_control/issues/147>`_ `#139 <https://github.com/ros-controls/gazebo_ros2_control/issues/139>`_ `#134 <https://github.com/ros-controls/gazebo_ros2_control/issues/134>`_ (`#150 <https://github.com/ros-controls/gazebo_ros2_control/issues/150>`_)
-  Co-authored-by: Keegan Sotebeer <ksotebeer95@gmail.com>
-  Co-authored-by: Maciej Bednarczyk <83034299+mcbed@users.noreply.github.com>
-  Co-authored-by: Bence Magyar <bence.magyar.robotics@gmail.com>
-* Contributors: Alejandro Hernández Cordero, Bence Magyar, Leander Stephen D'Souza
+* Add tricycle controller demo (`#145 <https://github.com/ros-controls/gazebo_ros2_control/issues/145>`_)
+* Contributors: Tony Najjar
 
-0.1.0 (2022-05-27)
+0.4.0 (2022-08-09)
 ------------------
-* Added diff drive example (`#113 <https://github.com/ros-simulation/gazebo_ros2_control/issues/113>`_)
+* fix demo launch
+* Fix setting initial values if command interfaces are not defined. (`#110 <https://github.com/ros-simulation/gazebo_ros2_control/issues/110>`_)
+* Contributors: Bence Magyar, Denis Štogl, Maciej Bednarczyk
+
+0.3.1 (2022-07-05)
+------------------
+* Fixed CMake source file extension (`#140 <https://github.com/ros-simulation/gazebo_ros2_control/issues/140>`_)
+* Adding simulation time parameter for the controller manager (`#138 <https://github.com/ros-simulation/gazebo_ros2_control/issues/138>`_)
+  Adding the simulation parameter so that the controller manager uses the simulation time instead of the ROS time.  The '/odom' and corresponding tf will only be published if this parameter is set to true.
+* Adjust repo URL (`#134 <https://github.com/ros-simulation/gazebo_ros2_control/issues/134>`_)
+* Changed launch variable name (`#130 <https://github.com/ros-simulation/gazebo_ros2_control/issues/130>`_)
+* Contributors: Alejandro Hernández Cordero, Bence Magyar, Eslam Salah, Jakub "Deli" Delicat
+
+0.3.0 (2022-05-27)
+------------------
+* [Forward port main] Added diff drive example (`#113 <https://github.com/ros-simulation/gazebo_ros2_control/issues/113>`_) (`#129 <https://github.com/ros-simulation/gazebo_ros2_control/issues/129>`_)
+* Merge pull request `#120 <https://github.com/ros-simulation/gazebo_ros2_control/issues/120>`_ from ros-simulation/ahcorde/main/117
+  Adapted to Humble
+* make linters happy
+* Update to Humble API
+* Support for mimic joints and example with gripper. (`#107 <https://github.com/ros-simulation/gazebo_ros2_control/issues/107>`_)
+* Contributors: Alejandro Hernández Cordero, Denis Štogl, ahcorde
+
+0.0.8 (2022-01-28)
+------------------
+* Enable setting default position of the simulated robot using ros2_control URDF tag. (`#100 <https://github.com/ros-simulation/gazebo_ros2_control//issues/100>`_)
+* Contributors: Denis Štogl
+
+0.0.7 (2021-12-03)
+------------------
+
+0.0.6 (2021-11-18)
+------------------
+* Fix ros2_control resource manager in galatic (`#96 <https://github.com/ros-simulation/gazebo_ros2_control//issues/96>`_)
 * Contributors: Alejandro Hernández Cordero
 
 0.0.4 (2021-10-26)
 ------------------
 * fix maintainer email (`#92 <https://github.com/ros-simulation/gazebo_ros2_control//issues/92>`_)
+* Galactic: Pass time and period to update function (`#88 <https://github.com/ros-simulation/gazebo_ros2_control//issues/88>`_)
+* Update severity of msgs to proper level (`#91 <https://github.com/ros-simulation/gazebo_ros2_control//issues/91>`_)
 * Add Imu and FT state interfaces (`#65 <https://github.com/ros-simulation/gazebo_ros2_control//issues/65>`_)
   Co-authored-by: Jordan Palacios <jordan.palacios@pal-robotics.com>
-* Contributors: Alejandro Hernández Cordero, Victor Lopez
+* Contributors: Alejandro Hernández Cordero, Andy McEvoy, Bence Magyar, Victor Lopez
 
 0.0.3 (2021-06-16)
 ------------------

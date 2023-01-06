@@ -47,7 +47,7 @@ ament_target_dependencies(example_effort
   std_msgs
 )
 
-add_executable(example_gripper examples/example_gripper)
+add_executable(example_gripper examples/example_gripper.cpp)
 ament_target_dependencies(example_gripper
   rclcpp
   std_msgs
@@ -59,6 +59,12 @@ ament_target_dependencies(example_diff_drive
   geometry_msgs
 )
 
+add_executable(example_tricycle_drive examples/example_tricycle_drive.cpp)
+ament_target_dependencies(example_tricycle_drive
+  rclcpp
+  geometry_msgs
+)
+
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   find_package(ament_lint_auto REQUIRED)
@@ -66,13 +72,15 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+## Install
 install(
   TARGETS
     example_position
     example_velocity
     example_effort
-    example_gripper
     example_diff_drive
+    example_tricycle_drive
+    example_gripper
   DESTINATION
     lib/${PROJECT_NAME}
 )

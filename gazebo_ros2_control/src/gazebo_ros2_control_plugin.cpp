@@ -111,7 +111,7 @@ public:
   rclcpp::Duration control_period_ = rclcpp::Duration(1, 0);
 
   // Last time the update method was called
-  rclcpp::Time last_update_sim_time_ros_;
+  rclcpp::Time last_update_sim_time_ros_ = rclcpp::Time((int64_t)0, RCL_ROS_TIME);
 };
 
 GazeboRosControlPlugin::GazeboRosControlPlugin()
@@ -261,10 +261,10 @@ void GazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf::Element
   // setup actuators and mechanism control node.
   // This call will block if ROS is not properly initialized.
   std::string urdf_string;
-  std::vector<hardware_interface::HardwareInfo> control_hardware;
+  std::vector<hardware_interface::HardwareInfo> control_hardware_info;
   try {
     urdf_string = impl_->getURDF(impl_->robot_description_);
-    control_hardware = hardware_interface::parse_control_resources_from_urdf(urdf_string);
+    control_hardware_info = hardware_interface::parse_control_resources_from_urdf(urdf_string);
   } catch (const std::runtime_error & ex) {
     RCLCPP_ERROR_STREAM(
       impl_->model_nh_->get_logger(),
@@ -286,8 +286,8 @@ void GazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf::Element
       ex.what());
   }
 
-  for (unsigned int i = 0; i < control_hardware.size(); i++) {
-    std::string robot_hw_sim_type_str_ = control_hardware[i].hardware_class_type;
+  for (unsigned int i = 0; i < control_hardware_info.size(); i++) {
+    std::string robot_hw_sim_type_str_ = control_hardware_info[i].hardware_plugin_name;
     auto gazeboSystem = std::unique_ptr<gazebo_ros2_control::GazeboSystemInterface>(
       impl_->robot_hw_sim_loader_->createUnmanagedInstance(robot_hw_sim_type_str_));
 
@@ -295,7 +295,7 @@ void GazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf::Element
     if (!gazeboSystem->initSim(
         node_ros2,
         impl_->parent_model_,
-        control_hardware[i],
+        control_hardware_info[i],
         sdf))
     {
       RCLCPP_FATAL(
@@ -303,7 +303,13 @@ void GazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf::Element
       return;
     }
 
-    resource_manager_->import_component(std::move(gazeboSystem));
+    resource_manager_->import_component(std::move(gazeboSystem), control_hardware_info[i]);
+
+    // activate all components
+    rclcpp_lifecycle::State state(
+      lifecycle_msgs::msg::State::PRIMARY_STATE_ACTIVE,
+      hardware_interface::lifecycle_state_names::ACTIVE);
+    resource_manager_->set_component_state(control_hardware_info[i].name, state);
   }
 
   impl_->executor_ = std::make_shared<rclcpp::executors::MultiThreadedExecutor>();
@@ -342,6 +348,9 @@ void GazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf::Element
         " s) is slower than the gazebo simulation period (" <<
         gazebo_period.seconds() << " s).");
   }
+  // Force setting of use_sime_time parameter
+  impl_->controller_manager_->set_parameter(
+    rclcpp::Parameter("use_sim_time", rclcpp::ParameterValue(true)));
 
   impl_->stop_ = false;
   auto spin = [this]()
@@ -367,25 +376,26 @@ void GazeboRosControlPrivate::Update()
 {
   // Get the simulation time and period
   gazebo::common::Time gz_time_now = parent_model_->GetWorld()->SimTime();
-  rclcpp::Time sim_time_ros(gz_time_now.sec, gz_time_now.nsec);
+  rclcpp::Time sim_time_ros(gz_time_now.sec, gz_time_now.nsec, RCL_ROS_TIME);
   rclcpp::Duration sim_period = sim_time_ros - last_update_sim_time_ros_;
 
   if (sim_period >= control_period_) {
+    controller_manager_->read(sim_time_ros, sim_period);
+    controller_manager_->update(sim_time_ros, sim_period);
     last_update_sim_time_ros_ = sim_time_ros;
-    controller_manager_->read();
-    controller_manager_->update();
   }
 
   // Always set commands on joints, otherwise at low control frequencies the joints tremble
   // as they are updated at a fraction of gazebo sim time
-  controller_manager_->write();
+  // use same time as for read and update call - this is how it is done is ros2_control_node
+  controller_manager_->write(sim_time_ros, sim_period);
 }
 
 // Called on world reset
 void GazeboRosControlPrivate::Reset()
 {
   // Reset timing variables to not pass negative update periods to controllers on world reset
-  last_update_sim_time_ros_ = rclcpp::Time();
+  last_update_sim_time_ros_ = rclcpp::Time((int64_t)0, RCL_ROS_TIME);
 }
 
 // Get the URDF XML from the parameter server
@@ -413,14 +423,13 @@ std::string GazeboRosControlPrivate::getURDF(std::string param_name) const
 
   // search and wait for robot_description on param server
   while (urdf_string.empty()) {
-    std::string search_param_name;
     RCLCPP_DEBUG(model_nh_->get_logger(), "param_name %s", param_name.c_str());
 
     try {
       auto f = parameters_client->get_parameters({param_name});
       f.wait();
       std::vector<rclcpp::Parameter> values = f.get();
-      urdf_string = values[0].as_string();
+      urdf_string = values.at(0).as_string();
     } catch (const std::exception & e) {
       RCLCPP_ERROR(model_nh_->get_logger(), "%s", e.what());
     }
@@ -430,7 +439,7 @@ std::string GazeboRosControlPrivate::getURDF(std::string param_name) const
     } else {
       RCLCPP_ERROR(
         model_nh_->get_logger(), "gazebo_ros2_control plugin is waiting for model"
-        " URDF in parameter [%s] on the ROS param server.", search_param_name.c_str());
+        " URDF in parameter [%s] on the ROS param server.", param_name.c_str());
     }
     usleep(100000);
   }
