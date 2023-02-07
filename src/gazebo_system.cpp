@@ -193,8 +193,8 @@ void GazeboSystem::registerJoints(
       }
       RCLCPP_INFO_STREAM(
         this->nh_->get_logger(),
-        "Joint '" << joint_name << "'is mimicing joint '" << mimicked_joint << "' with mutiplier: "
-                  << mimic_joint.multiplier);
+        "Joint '" << joint_name << "'is mimicing joint '" << mimicked_joint <<
+          "' with mutiplier: " << mimic_joint.multiplier);
       this->dataPtr->mimic_joints_.push_back(mimic_joint);
       suffix = "_mimic";
     }
@@ -509,6 +509,11 @@ GazeboSystem::perform_command_mode_switch(
     }
   }
 
+  // mimic joint has the same control mode as mimicked joint
+  for (const auto & mimic_joint : this->dataPtr->mimic_joints_) {
+    this->dataPtr->joint_control_methods_[mimic_joint.joint_index] =
+      this->dataPtr->joint_control_methods_[mimic_joint.mimicked_joint_index];
+  }
   return hardware_interface::return_type::OK;
 }
 
