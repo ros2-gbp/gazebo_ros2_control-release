@@ -1,3 +1,28 @@
+## gazebo_ros2_control (rolling) - 0.5.1-1
+
+The packages in the `gazebo_ros2_control` repository were released into the `rolling` distro by running `/usr/local/bin/bloom-release --rosdistro rolling gazebo_ros2_control --edit` on `Tue, 07 Feb 2023 16:30:53 -0000`
+
+These packages were released:
+- `gazebo_ros2_control`
+- `gazebo_ros2_control_demos`
+
+Version of package(s) in repository `gazebo_ros2_control`:
+
+- upstream repository: https://github.com/ros-simulation/gazebo_ros2_control.git
+- release repository: https://github.com/ros2-gbp/gazebo_ros2_control-release.git
+- rosdistro version: `0.5.0-1`
+- old version: `0.5.0-1`
+- new version: `0.5.1-1`
+
+Versions of tools used:
+
+- bloom version: `0.11.2`
+- catkin_pkg version: `0.5.2`
+- rosdep version: `0.19.0`
+- rosdistro version: `0.9.0`
+- vcstools version: `0.1.42`
+
+
 ## gazebo_ros2_control (humble) - 0.4.1-1
 
 The packages in the `gazebo_ros2_control` repository were released into the `humble` distro by running `/usr/local/bin/bloom-release --rosdistro humble gazebo_ros2_control --edit` on `Tue, 07 Feb 2023 16:18:36 -0000`
