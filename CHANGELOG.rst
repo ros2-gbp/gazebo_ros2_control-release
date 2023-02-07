@@ -2,15 +2,13 @@
 Changelog for package gazebo_ros2_control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.5.0 (2023-01-06)
+0.4.1 (2023-02-07)
 ------------------
 * Force setting use_sim_time parameter when using plugin. (`#171 <https://github.com/ros-controls/gazebo_ros2_control/issues/171>`_)
-* Improve error message if robot_description\_ param is wrong (`#168 <https://github.com/ros-controls/gazebo_ros2_control/issues/168>`_)
-* Rename hw info class type to plugin name (`#169 <https://github.com/ros-controls/gazebo_ros2_control/issues/169>`_)
 * Removed warning (`#162 <https://github.com/ros-controls/gazebo_ros2_control/issues/162>`_)
 * Mimic joint should have the same control mode as mimicked joint. (`#154 <https://github.com/ros-controls/gazebo_ros2_control/issues/154>`_)
 * Enable loading params from multiple yaml files (`#149 <https://github.com/ros-controls/gazebo_ros2_control/issues/149>`_)
-* Contributors: Alejandro Hernández Cordero, Christoph Fröhlich, Denis Štogl, Tony Najjar
+* Contributors: Alejandro Hernández Cordero, Denis Štogl, Tony Najjar
 
 0.4.0 (2022-08-09)
 ------------------
