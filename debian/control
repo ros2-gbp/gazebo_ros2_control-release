@@ -1,0 +1,12 @@
+Source: ros-rolling-gazebo-ros2-control-demos
+Section: misc
+Priority: optional
+Maintainer: Alejandro Hernandez <alejandro@osrfoundation.org>
+Build-Depends: debhelper (>= 9.0.0), ros-rolling-ament-cmake, ros-rolling-ament-cmake-gtest <!nocheck>, ros-rolling-ament-lint-auto <!nocheck>, ros-rolling-ament-lint-common <!nocheck>, ros-rolling-control-msgs, ros-rolling-geometry-msgs, ros-rolling-rclcpp, ros-rolling-rclcpp-action, ros-rolling-std-msgs, ros-rolling-ros-workspace
+Homepage: http://ros.org/wiki/gazebo_ros_control
+Standards-Version: 3.9.2
+
+Package: ros-rolling-gazebo-ros2-control-demos
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-rolling-ament-index-python, ros-rolling-control-msgs, ros-rolling-diff-drive-controller, ros-rolling-effort-controllers, ros-rolling-gazebo-ros, ros-rolling-gazebo-ros2-control, ros-rolling-geometry-msgs, ros-rolling-hardware-interface, ros-rolling-joint-state-broadcaster, ros-rolling-joint-trajectory-controller, ros-rolling-launch, ros-rolling-launch-ros, ros-rolling-rclcpp, ros-rolling-robot-state-publisher, ros-rolling-ros2-control, ros-rolling-ros2-controllers, ros-rolling-std-msgs, ros-rolling-tricycle-controller, ros-rolling-velocity-controllers, ros-rolling-xacro, ros-rolling-ros-workspace
+Description: gazebo_ros2_control_demos
