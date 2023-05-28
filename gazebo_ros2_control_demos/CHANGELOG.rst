@@ -2,15 +2,16 @@
 Changelog for package gazebo_ros2_control_demos
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.4.3 (2023-05-23)
+0.6.0 (2023-05-23)
 ------------------
-* Clean shutdown position example (`#196 <https://github.com/ros-controls/gazebo_ros2_control/issues/196>`_) (`#199 <https://github.com/ros-controls/gazebo_ros2_control/issues/199>`_)
-* Contributors: mergify[bot]
+* Clean shutdown position example (`#196 <https://github.com/ros-controls/gazebo_ros2_control/issues/196>`_)
+* Remove publish_rate parameter (`#179 <https://github.com/ros-controls/gazebo_ros2_control/issues/179>`_)
+* Contributors: Alejandro Hernández Cordero, Tony Najjar
 
-0.4.2 (2023-03-02)
+0.5.1 (2023-02-07)
 ------------------
 
-0.4.1 (2023-02-07)
+0.5.0 (2023-01-06)
 ------------------
 * Add tricycle controller demo (`#145 <https://github.com/ros-controls/gazebo_ros2_control/issues/145>`_)
 * Contributors: Tony Najjar
