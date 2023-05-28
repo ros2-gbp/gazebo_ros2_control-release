@@ -39,6 +39,10 @@ ament_target_dependencies(${PROJECT_NAME}
   yaml_cpp_vendor
 )
 
+if("$ENV{ROS_DISTRO}" STREQUAL "rolling")
+  add_definitions(-DROLLING)
+endif()
+
 add_library(gazebo_hardware_plugins SHARED
   src/gazebo_system.cpp
 )
@@ -62,8 +66,18 @@ ament_export_include_directories(
   include
 )
 
-ament_export_dependencies(ament_cmake)
-ament_export_dependencies(rclcpp)
+ament_export_dependencies(
+  ament_cmake
+  angles
+  controller_manager
+  gazebo_dev
+  gazebo_ros
+  hardware_interface
+  pluginlib
+  rclcpp
+  yaml_cpp_vendor
+)
+
 ament_export_libraries(
   ${PROJECT_NAME}
   gazebo_hardware_plugins
