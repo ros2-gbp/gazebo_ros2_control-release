@@ -193,7 +193,7 @@ void GazeboSystem::registerJoints(
       }
       RCLCPP_INFO_STREAM(
         this->nh_->get_logger(),
-        "Joint '" << joint_name << "'is mimicing joint '" << mimicked_joint <<
+        "Joint '" << joint_name << "'is mimicking joint '" << mimicked_joint <<
           "' with mutiplier: " << mimic_joint.multiplier);
       this->dataPtr->mimic_joints_.push_back(mimic_joint);
       suffix = "_mimic";
@@ -475,13 +475,11 @@ GazeboSystem::perform_command_mode_switch(
         hardware_interface::HW_IF_POSITION))
       {
         this->dataPtr->joint_control_methods_[j] &= static_cast<ControlMethod_>(VELOCITY & EFFORT);
-      }
-      if (interface_name == (this->dataPtr->joint_names_[j] + "/" +
+      } else if (interface_name == (this->dataPtr->joint_names_[j] + "/" + // NOLINT
         hardware_interface::HW_IF_VELOCITY))
       {
         this->dataPtr->joint_control_methods_[j] &= static_cast<ControlMethod_>(POSITION & EFFORT);
-      }
-      if (interface_name == (this->dataPtr->joint_names_[j] + "/" +
+      } else if (interface_name == (this->dataPtr->joint_names_[j] + "/" + // NOLINT
         hardware_interface::HW_IF_EFFORT))
       {
         this->dataPtr->joint_control_methods_[j] &=
@@ -495,13 +493,11 @@ GazeboSystem::perform_command_mode_switch(
         hardware_interface::HW_IF_POSITION))
       {
         this->dataPtr->joint_control_methods_[j] |= POSITION;
-      }
-      if (interface_name == (this->dataPtr->joint_names_[j] + "/" +
+      } else if (interface_name == (this->dataPtr->joint_names_[j] + "/" + // NOLINT
         hardware_interface::HW_IF_VELOCITY))
       {
         this->dataPtr->joint_control_methods_[j] |= VELOCITY;
-      }
-      if (interface_name == (this->dataPtr->joint_names_[j] + "/" +
+      } else if (interface_name == (this->dataPtr->joint_names_[j] + "/" + // NOLINT
         hardware_interface::HW_IF_EFFORT))
       {
         this->dataPtr->joint_control_methods_[j] |= EFFORT;
@@ -575,15 +571,13 @@ hardware_interface::return_type GazeboSystem::write(
       this->dataPtr->joint_position_cmd_[mimic_joint.joint_index] =
         mimic_joint.multiplier *
         this->dataPtr->joint_position_cmd_[mimic_joint.mimicked_joint_index];
-    }
-    if (this->dataPtr->joint_control_methods_[mimic_joint.joint_index] & VELOCITY &&
+    } else if (this->dataPtr->joint_control_methods_[mimic_joint.joint_index] & VELOCITY && // NOLINT
       this->dataPtr->joint_control_methods_[mimic_joint.mimicked_joint_index] & VELOCITY)
     {
       this->dataPtr->joint_velocity_cmd_[mimic_joint.joint_index] =
         mimic_joint.multiplier *
         this->dataPtr->joint_velocity_cmd_[mimic_joint.mimicked_joint_index];
-    }
-    if (this->dataPtr->joint_control_methods_[mimic_joint.joint_index] & EFFORT &&
+    } else if (this->dataPtr->joint_control_methods_[mimic_joint.joint_index] & EFFORT && // NOLINT
       this->dataPtr->joint_control_methods_[mimic_joint.mimicked_joint_index] & EFFORT)
     {
       this->dataPtr->joint_effort_cmd_[mimic_joint.joint_index] =
@@ -595,12 +589,14 @@ hardware_interface::return_type GazeboSystem::write(
     if (this->dataPtr->sim_joints_[j]) {
       if (this->dataPtr->joint_control_methods_[j] & POSITION) {
         this->dataPtr->sim_joints_[j]->SetPosition(0, this->dataPtr->joint_position_cmd_[j], true);
-      }
-      if (this->dataPtr->joint_control_methods_[j] & VELOCITY) {
+        this->dataPtr->sim_joints_[j]->SetVelocity(0, 0.0);
+      } else if (this->dataPtr->joint_control_methods_[j] & VELOCITY) { // NOLINT
         this->dataPtr->sim_joints_[j]->SetVelocity(0, this->dataPtr->joint_velocity_cmd_[j]);
-      }
-      if (this->dataPtr->joint_control_methods_[j] & EFFORT) {
+      } else if (this->dataPtr->joint_control_methods_[j] & EFFORT) { // NOLINT
         this->dataPtr->sim_joints_[j]->SetForce(0, this->dataPtr->joint_effort_cmd_[j]);
+      } else {
+        // Fallback case is a velocity command of zero
+        this->dataPtr->sim_joints_[j]->SetVelocity(0, 0.0);
       }
     }
   }
