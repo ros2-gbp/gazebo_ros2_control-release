@@ -189,6 +189,13 @@ void GazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf::Element
       sdf->GetElement("hold_joints")->Get<bool>();
   }
 
+  // Get controller manager node name
+  std::string controllerManagerNodeName{"controller_manager"};
+
+  if (sdf->HasElement("controller_manager_name")) {
+    controllerManagerNodeName = sdf->GetElement("controller_manager_name")->Get<std::string>();
+  }
+
   // There's currently no direct way to set parameters to the plugin's node
   // So we have to parse the plugin file manually and set it to the node's context.
   auto rcl_context = impl_->model_nh_->get_node_base_interface()->get_context()->get_rcl_context();
@@ -282,6 +289,13 @@ void GazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf::Element
     std::make_unique<hardware_interface::ResourceManager>();
 
   try {
+    resource_manager_->load_urdf(urdf_string, false, false);
+  } catch (...) {
+    // This error should be normal as the resource manager is not supposed to load and initialize
+    // them
+    RCLCPP_ERROR(impl_->model_nh_->get_logger(), "Error initializing URDF to resource manager!");
+  }
+  try {
     impl_->robot_hw_sim_loader_.reset(
       new pluginlib::ClassLoader<gazebo_ros2_control::GazeboSystemInterface>(
         "gazebo_ros2_control",
@@ -360,7 +374,7 @@ void GazeboRosControlPlugin::Load(gazebo::physics::ModelPtr parent, sdf::Element
     new controller_manager::ControllerManager(
       std::move(resource_manager_),
       impl_->executor_,
-      "controller_manager",
+      controllerManagerNodeName,
       impl_->model_nh_->get_namespace()));
   impl_->executor_->add_node(impl_->controller_manager_);
 
