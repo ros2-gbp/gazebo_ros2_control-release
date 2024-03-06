@@ -1,0 +1,172 @@
+ros-rolling-gazebo-ros2-control (0.7.1-2noble) noble; urgency=high
+
+  * Load the URDF to the resource_manager before parsing it to CM  (#262 <https://github.com/ros-controls/gazebo_ros2_control//issues/262>)
+    * Load the URDF to the resource_manager before parsing it to CM constructor (fixes https://github.com/ros-controls/ros2_control/issues/1299)
+  * Use lexical casts (#260 <https://github.com/ros-controls/gazebo_ros2_control//issues/260>)
+    Co-authored-by: Alejandro Hernández Cordero <mailto:ahcorde@gmail.com>
+  * Fix links in documentation (#263 <https://github.com/ros-controls/gazebo_ros2_control//issues/263>)
+  * Added controller manager xml argument (#255 <https://github.com/ros-controls/gazebo_ros2_control//issues/255>)
+  * Contributors: Alejandro Hernández Cordero, Christoph Fröhlich, Sai Kishor Kothakota, Silvio Traversaro
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Wed, 24 Jan 2024 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.7.0-2noble) noble; urgency=high
+
+  * Add hold_joints parameter (#251 <https://github.com/ros-controls/gazebo_ros2_control/issues/251>)
+  * Fix stuck passive joints (#237 <https://github.com/ros-controls/gazebo_ros2_control/issues/237>)
+  * Contributors: Christoph Fröhlich, Johannes Huemer
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Thu, 04 Jan 2024 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.6.2-2noble) noble; urgency=high
+
+  * Catch pluginlib exceptions (#229 <https://github.com/ros-controls/gazebo_ros2_control/issues/229>)
+    Co-authored-by: Alejandro Hernández Cordero <mailto:ahcorde@gmail.com>
+  * Set the C++ version to 17 (#221 <https://github.com/ros-controls/gazebo_ros2_control/issues/221>)
+  * Removed unused var (#220 <https://github.com/ros-controls/gazebo_ros2_control/issues/220>)
+  * Remove plugin export from ROS 1 (#212 <https://github.com/ros-controls/gazebo_ros2_control/issues/212>)
+  * Forced zero vel in position mode to avoid sagging (#213 <https://github.com/ros-controls/gazebo_ros2_control/issues/213>)
+  * Contributors: Alejandro Hernández Cordero, Christoph Fröhlich, gwalck
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Wed, 23 Aug 2023 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.6.1-2noble) noble; urgency=high
+
+  * Add pre-commit and CI-format (#206 <https://github.com/ros-controls/gazebo_ros2_control/issues/206>)
+    * Add pre-commit and ci-format
+  * Compile with ROS iron and rolling (#202 <https://github.com/ros-controls/gazebo_ros2_control/issues/202>)
+  * Contributors: Alejandro Hernández Cordero, Christoph Fröhlich
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Fri, 09 Jun 2023 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.6.0-2noble) noble; urgency=high
+
+  * add copy operator to SafeEnum (#197 <https://github.com/ros-controls/gazebo_ros2_control/issues/197>)
+  * Fixed rolling compilation (#195 <https://github.com/ros-controls/gazebo_ros2_control/issues/195>)
+  * Export all dependencies (#183 <https://github.com/ros-controls/gazebo_ros2_control/issues/183>) (#184 <https://github.com/ros-controls/gazebo_ros2_control/issues/184>)
+  * Contributors: Alejandro Hernández Cordero, Noel Jiménez García, Adrian Zwiener
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Tue, 23 May 2023 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.5.1-2noble) noble; urgency=high
+
+  * Various bug fixes (#177 <https://github.com/ros-controls/gazebo_ros2_control/issues/177>)
+  * Contributors: AndyZe
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Tue, 07 Feb 2023 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.5.0-2noble) noble; urgency=high
+
+  * Force setting use_sim_time parameter when using plugin. (#171 <https://github.com/ros-controls/gazebo_ros2_control/issues/171>)
+  * Improve error message if robot_description_ param is wrong (#168 <https://github.com/ros-controls/gazebo_ros2_control/issues/168>)
+  * Rename hw info class type to plugin name (#169 <https://github.com/ros-controls/gazebo_ros2_control/issues/169>)
+  * Removed warning (#162 <https://github.com/ros-controls/gazebo_ros2_control/issues/162>)
+  * Mimic joint should have the same control mode as mimicked joint. (#154 <https://github.com/ros-controls/gazebo_ros2_control/issues/154>)
+  * Enable loading params from multiple yaml files (#149 <https://github.com/ros-controls/gazebo_ros2_control/issues/149>)
+  * Contributors: Alejandro Hernández Cordero, Christoph Fröhlich, Denis Štogl, Tony Najjar
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Fri, 06 Jan 2023 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.4.0-2noble) noble; urgency=high
+
+  * Implemented perform_command_mode_switch override in GazeboSystem (#136 <https://github.com/ros-simulation/gazebo_ros2_control/issues/136>)
+  * added namespace to controller manager (#147 <https://github.com/ros-simulation/gazebo_ros2_control/issues/147>)
+  * Activate all hardware in URDF (#144 <https://github.com/ros-simulation/gazebo_ros2_control/issues/144>)
+  * activated all hardware by default (#143 <https://github.com/ros-simulation/gazebo_ros2_control/issues/143>)
+  * Fix setting initial values if command interfaces are not defined. (#110 <https://github.com/ros-simulation/gazebo_ros2_control/issues/110>)
+  * changed name to GazeboSystem (#142 <https://github.com/ros-simulation/gazebo_ros2_control/issues/142>)
+  * Contributors: Denis Štogl, Keegan Sotebeer, Maciej Bednarczyk
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Tue, 09 Aug 2022 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.3.1-2noble) noble; urgency=high
+
+  * Added logic for activating hardware interfaces (#139 <https://github.com/ros-simulation/gazebo_ros2_control/issues/139>)
+  * Adjust repo URL (#134 <https://github.com/ros-simulation/gazebo_ros2_control/issues/134>)
+  * Contributors: Alejandro Hernández Cordero, Bence Magyar
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Tue, 05 Jul 2022 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.3.0-2noble) noble; urgency=high
+
+  * Merge pull request #120 <https://github.com/ros-simulation/gazebo_ros2_control/issues/120> from ros-simulation/ahcorde/main/117
+    Adapted to Humble
+  * make linters happy
+  * Merge remote-tracking branch 'denis/using-under-namespace' into ahcorde/main/117
+  * update read/write interface functions of ros2_control parts
+    This is needed since the ros2_control interfaces have been update
+  * Declare dependency of gazebo_hardware_plugins to urdf in CMakeLists.txt (#117 <https://github.com/ros-simulation/gazebo_ros2_control/issues/117>)
+  * ros2_control is now having usings under its namespace.
+  * Fix mimic joint for effort command (#109 <https://github.com/ros-simulation/gazebo_ros2_control/issues/109>)
+  * Support for mimic joints and example with gripper. (#107 <https://github.com/ros-simulation/gazebo_ros2_control/issues/107>)
+  * Contributors: Alejandro Hernández Cordero, Christoph Fröhlich, Denis Štogl, Manuel M, Martin Wudenka, ahcorde
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Fri, 27 May 2022 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.0.8-2noble) noble; urgency=high
+
+  * Enable setting default position of the simulated robot using ros2_control URDF tag. (#100 <https://github.com/ros-simulation/gazebo_ros2_control//issues/100>)
+  * Contributors: Denis Štogl
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Fri, 28 Jan 2022 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.0.7-2noble) noble; urgency=high
+
+  * Pass ROS time instead of SYSTEM time to update function (#97 <https://github.com/ros-simulation/gazebo_ros2_control//issues/97>)
+  * Contributors: Błażej Sowa
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Fri, 03 Dec 2021 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.0.6-2noble) noble; urgency=high
+
+  * Fix ros2_control resource manager in galatic (#96 <https://github.com/ros-simulation/gazebo_ros2_control//issues/96>)
+  * Contributors: Alejandro Hernández Cordero
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Thu, 18 Nov 2021 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.0.4-2noble) noble; urgency=high
+
+  * Added testing CI (#93 <https://github.com/ros-simulation/gazebo_ros2_control//issues/93>)
+    Co-authored-by: Bence Magyar <mailto:bence.magyar.robotics@gmail.com>
+    Co-authored-by: Bence Magyar <mailto:bence.magyar.robotics@gmail.com>
+  * fix maintainer email (#92 <https://github.com/ros-simulation/gazebo_ros2_control//issues/92>)
+  * Galactic: Pass time and period to update function (#88 <https://github.com/ros-simulation/gazebo_ros2_control//issues/88>)
+  * Export interfaces created in init (#83 <https://github.com/ros-simulation/gazebo_ros2_control//issues/83>)
+  * Add Imu and FT state interfaces (#65 <https://github.com/ros-simulation/gazebo_ros2_control//issues/65>)
+    Co-authored-by: Jordan Palacios <mailto:jordan.palacios@pal-robotics.com>
+  * Contributors: Alejandro Hernández Cordero, Bence Magyar, Błażej Sowa, Victor Lopez
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Tue, 26 Oct 2021 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.0.3-2noble) noble; urgency=high
+
+  * Forward sdf ros remappings to loaded controllers (#80 <https://github.com/ros-simulation/gazebo_ros2_control/issues/80>)
+    Co-authored-by: Jonatan Olofsson <mailto:jonatan.olofsson@saabgroup.com>
+  * Join with the controller manager's executor thread on exit (#79 <https://github.com/ros-simulation/gazebo_ros2_control/issues/79>)
+  * Ensure that sim_joints_ always has the same number of elements as the… (#77 <https://github.com/ros-simulation/gazebo_ros2_control/issues/77>)
+  * Write joints on each simulation update period (#78 <https://github.com/ros-simulation/gazebo_ros2_control/issues/78>)
+  * Contributors: Jonatan Olofsson, Kenneth Bogert, Victor Lopez
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Wed, 16 Jun 2021 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.0.2-2noble) noble; urgency=high
+
+  * add ros parameters file to node context (#60 <https://github.com/ros-simulation/gazebo_ros2_control//issues/60>)
+    Co-authored-by: ahcorde <mailto:ahcorde@gmail.com>
+  * Expose include path (#58 <https://github.com/ros-simulation/gazebo_ros2_control//issues/58>)
+  * Added License file (#55 <https://github.com/ros-simulation/gazebo_ros2_control//issues/55>)
+  * Fixed state interfaces (#53 <https://github.com/ros-simulation/gazebo_ros2_control//issues/53>)
+  * Contributors: Alejandro Hernández Cordero, Chen Bainian, Karsten Knese
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Mon, 19 Apr 2021 00:00:00 -0000
+
+ros-rolling-gazebo-ros2-control (0.0.1-2noble) noble; urgency=high
+
+  * Updated with ros2-control Foxy API (#44 <https://github.com/ros-simulation/gazebo_ros2_control/issues/44>)
+    Co-authored-by: Karsten Knese <mailto:Karsten1987@users.noreply.github.com>
+  * Added initial version of gazebo_ros2_control (#1 <https://github.com/ros-simulation/gazebo_ros2_control/issues/1>)
+  * Contributors: Alejandro Hernández Cordero, Louise Poubel, Karsten Knese, Bence Magyar
+
+ -- Alejandro Hernandez <alejandro@osrfoundation.org>  Fri, 05 Feb 2021 00:00:00 -0000
+
+
