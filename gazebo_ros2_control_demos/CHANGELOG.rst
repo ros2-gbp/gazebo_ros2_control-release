@@ -2,56 +2,51 @@
 Changelog for package gazebo_ros2_control_demos
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.4.7 (2024-03-21)
+0.6.5 (2024-03-21)
 ------------------
-* Cleanup of demos (`#290 <https://github.com/ros-controls/gazebo_ros2_control/issues/290>`_) (`#292 <https://github.com/ros-controls/gazebo_ros2_control/issues/292>`_)
+* Cleanup of demos (`#290 <https://github.com/ros-controls/gazebo_ros2_control/issues/290>`_) (`#293 <https://github.com/ros-controls/gazebo_ros2_control/issues/293>`_)
   (cherry picked from commit 03b853b5337f6b8e9b8d4c0c8a3d814d7f34a97c)
   Co-authored-by: Christoph Fröhlich <christophfroehlich@users.noreply.github.com>
 * Contributors: mergify[bot]
 
-0.4.6 (2024-01-24)
+0.6.4 (2024-01-24)
 ------------------
 
-0.4.5 (2024-01-04)
+0.6.3 (2024-01-04)
 ------------------
-* Rename cartpole (`#252 <https://github.com/ros-controls/gazebo_ros2_control/issues/252>`_) (`#254 <https://github.com/ros-controls/gazebo_ros2_control/issues/254>`_)
+* Rename cartpole (`#252 <https://github.com/ros-controls/gazebo_ros2_control/issues/252>`_) (`#253 <https://github.com/ros-controls/gazebo_ros2_control/issues/253>`_)
   Co-authored-by: Alejandro Hernández Cordero <ahcorde@gmail.com>
   (cherry picked from commit b39074a4a1adf8a9319a6d4378ac26e2aa9e298a)
   Co-authored-by: Christoph Fröhlich <christophfroehlich@users.noreply.github.com>
-* Replace double quotes with single ones (`#243 <https://github.com/ros-controls/gazebo_ros2_control/issues/243>`_) (`#244 <https://github.com/ros-controls/gazebo_ros2_control/issues/244>`_)
-  (cherry picked from commit f991075a672a26d42c49504e07f8dbb46dfcbb4a)
-  Co-authored-by: Christoph Fröhlich <christophfroehlich@users.noreply.github.com>
-* Cleanup controller config (`#232 <https://github.com/ros-controls/gazebo_ros2_control/issues/232>`_) (`#233 <https://github.com/ros-controls/gazebo_ros2_control/issues/233>`_)
+* Replace double quotes with single ones (`#243 <https://github.com/ros-controls/gazebo_ros2_control/issues/243>`_)
+* Cleanup controller config (`#232 <https://github.com/ros-controls/gazebo_ros2_control/issues/232>`_)
   * Remove wrong yaml entries
   * Rename effort_controller
-  (cherry picked from commit 934621ee236dc9b32350b113c6b42a894bfbf092)
-  Co-authored-by: Christoph Fröhlich <christophfroehlich@users.noreply.github.com>
-* Contributors: mergify[bot]
+* Contributors: Christoph Fröhlich, mergify[bot]
 
-0.4.4 (2023-08-21)
+0.6.2 (2023-08-23)
 ------------------
-* Set the C++ version to 17 (`#221 <https://github.com/ros-controls/gazebo_ros2_control/issues/221>`_) (`#228 <https://github.com/ros-controls/gazebo_ros2_control/issues/228>`_)
-  (cherry picked from commit 6da415cf82a75e2a5e9f9a41400957ad45b2be84)
-  Co-authored-by: Alejandro Hernández Cordero <ahcorde@gmail.com>
-* Update diff_drive_controller.yaml (`#224 <https://github.com/ros-controls/gazebo_ros2_control/issues/224>`_) (`#225 <https://github.com/ros-controls/gazebo_ros2_control/issues/225>`_)
+* Set the C++ version to 17 (`#221 <https://github.com/ros-controls/gazebo_ros2_control/issues/221>`_)
+* Update diff_drive_controller.yaml (`#224 <https://github.com/ros-controls/gazebo_ros2_control/issues/224>`_)
   The wrong base frame is set. The name of the link in the URDF is chassis.
-  (cherry picked from commit c915939bfc13a43b2ab0e30029725f6c8023f3ca)
-  Co-authored-by: David V. Lu!! <davidvlu@gmail.com>
-* Add pre-commit and CI-format (`#206 <https://github.com/ros-controls/gazebo_ros2_control/issues/206>`_) (`#207 <https://github.com/ros-controls/gazebo_ros2_control/issues/207>`_)
+* Contributors: Alejandro Hernández Cordero, David V. Lu!!
+
+0.6.1 (2023-06-09)
+------------------
+* Add pre-commit and CI-format (`#206 <https://github.com/ros-controls/gazebo_ros2_control/issues/206>`_)
   * Add pre-commit and ci-format
-  (cherry picked from commit f2cf686a1a97cefc9b5e3daa115e0c4854ea5707)
-  Co-authored-by: Christoph Fröhlich <christophfroehlich@users.noreply.github.com>
-* Contributors: Alejandro Hernández Cordero, Christoph Fröhlich, mergify[bot]
+* Contributors: Christoph Fröhlich
 
-0.4.3 (2023-05-23)
+0.6.0 (2023-05-23)
 ------------------
-* Clean shutdown position example (`#196 <https://github.com/ros-controls/gazebo_ros2_control/issues/196>`_) (`#199 <https://github.com/ros-controls/gazebo_ros2_control/issues/199>`_)
-* Contributors: mergify[bot]
+* Clean shutdown position example (`#196 <https://github.com/ros-controls/gazebo_ros2_control/issues/196>`_)
+* Remove publish_rate parameter (`#179 <https://github.com/ros-controls/gazebo_ros2_control/issues/179>`_)
+* Contributors: Alejandro Hernández Cordero, Tony Najjar
 
-0.4.2 (2023-03-02)
+0.5.1 (2023-02-07)
 ------------------
 
-0.4.1 (2023-02-07)
+0.5.0 (2023-01-06)
 ------------------
 * Add tricycle controller demo (`#145 <https://github.com/ros-controls/gazebo_ros2_control/issues/145>`_)
 * Contributors: Tony Najjar
