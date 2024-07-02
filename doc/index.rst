@@ -143,13 +143,13 @@ Using PID control joints
 To use PID control joints in gazebo_ros2_control, you should define their parameters inside the ``<joint>`` tag
 within the ``<ros2_control>`` tag. These PID joints can be controlled either in position or velocity.
 
-- To control a joint with velocity PID, simply set its ``command_interface`` to ``velocity_PID``.
-- To control a joint with position PID, set its ``command_interface`` to ``position_PID``.
+- To control a joint with velocity PID, simply set its ``command_interface`` to ``velocity_pid``.
+- To control a joint with position PID, set its ``command_interface`` to ``position_pid``.
 
 .. note::
-    You cannot have both command interfaces set to position and position_PID for the same joint. The same restriction applies to velocity (and velocity_PID).
+    You cannot have both command interfaces set to position and position_pid for the same joint. The same restriction applies to velocity (and velocity_pid).
 
-To create a system with one joint that can be controlled using both position_PID and velocity_PID, follow this example:
+To create a system with one joint that can be controlled using both position_pid and velocity_pid, follow this example:
 
 .. code-block:: xml
 
@@ -169,8 +169,8 @@ To create a system with one joint that can be controlled using both position_PID
       <param name="vel_kd">2</param>
       <param name="vel_max_integral_error">10000</param>
 
-      <command_interface name="position_PID"/>
-      <command_interface name="velocity_PID"/>
+      <command_interface name="position_pid"/>
+      <command_interface name="velocity_pid"/>
 
       <state_interface name="position">
         <param name="initial_value">1.0</param>
@@ -262,7 +262,7 @@ Use the tag ``<parameters>`` inside ``<plugin>`` to set the YAML file with the c
     <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
       <parameters>$(find gazebo_ros2_control_demos)/config/cart_controller.yaml</parameters>
     </plugin>
-  <gazebo>
+  </gazebo>
 
 The following is a basic configuration of the controllers:
 
@@ -326,9 +326,6 @@ When the Gazebo world is launched you can run some of the following commands to 
 Gripper
 -----------------------------------------------------------
 The following example shows a parallel gripper with a mimic joint:
-
-.. image:: img/gripper.gif
-  :alt: Cart
 
 .. code-block:: shell
 
