@@ -189,6 +189,30 @@ Where the parameters are as follows:
 
 The same definitions apply to the ``vel_*`` parameters.
 
+The PID parameters can be defined for ``position`` or ``position_pid`` and ``velocity`` or ``velocity_pid`` command interfaces as explained above, or defining them in a YAML file and loading it in the ``gazebo_ros2_control`` plugin as below:
+
+.. code-block:: yaml
+
+  gazebo_ros2_control:
+    ros__parameters:
+      pid_gains:
+        position_pid: # (or) position
+          slider_to_cart: {kp:  100.0, kd: 10.0, ki:  1.0, max_integral_error: 10000.0}
+
+.. code-block:: xml
+
+  <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      ...
+      <ros>
+        <argument>--ros-args</argument>
+        <argument>--params-file</argument>
+        <argument>Path to the configuration file</argument>
+      </ros>
+    </plugin>
+  </gazebo>
+
+
 Add the gazebo_ros2_control plugin
 ==========================================
 
@@ -212,7 +236,23 @@ The *gazebo_ros2_control* ``<plugin>`` tag also has the following optional child
 
 * ``<robot_param>``: The location of the ``robot_description`` (URDF) on the parameter server, defaults to ``robot_description``
 * ``<robot_param_node>``: Name of the node where the ``robot_param`` is located, defaults to ``robot_state_publisher``
-* ``<parameters>``: YAML file with the configuration of the controllers
+* ``<hold_joints>``: if set to true (default), it will hold the joints' position if their interface was not claimed, e.g., the controller hasn't been activated yet.
+* ``<parameters>``: A YAML file with the configuration of the controllers. This element can be given multiple times to load multiple files.
+* ``<controller_manager_name>``: Set controller manager name (default: ``controller_manager``)
+
+Additionally, one can specify a namespace and remapping rules, which will be forwarded to the controller_manager and loaded controllers. Add the following ``<ros>`` section:
+
+.. code-block:: xml
+
+  <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      ...
+      <ros>
+        <namespace>my_namespace</namespace>
+        <remapping>/robot_description:=/robot_description_full</remapping>
+      </ros>
+    </plugin>
+  </gazebo>
 
 Default gazebo_ros2_control Behavior
 -----------------------------------------------------------
@@ -376,6 +416,7 @@ The following examples shows a vertical cart control by a PID joint using positi
 
 .. code-block:: shell
 
+  ros2 launch gazebo_ros2_control_demos vertical_cart_example_position_pids_in_yaml.launch.py
   ros2 launch gazebo_ros2_control_demos vertical_cart_example_position_pid.launch.py
   ros2 launch gazebo_ros2_control_demos vertical_cart_example_velocity_pid.launch.py
 
@@ -383,3 +424,13 @@ The following examples shows a vertical cart control by a PID joint using positi
 
   ros2 run gazebo_ros2_control_demos example_position_pid
   ros2 run gazebo_ros2_control_demos example_velocity
+
+The ``vertical_cart_example_position_pids_in_yaml.launch.py`` example uses a YAML file as following to set the PID gains:
+
+.. code-block:: yaml
+
+  gazebo_ros2_control:
+    ros__parameters:
+      pid_gains:
+        position:
+          slider_to_cart: {kp:  100.0, kd: 10.0, ki:  1.0, max_integral_error: 10000.0}
